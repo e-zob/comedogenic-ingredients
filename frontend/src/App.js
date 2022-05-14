@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import SearchIngredient from "./components/SearchIngredient";
+import UpdateIngredient from "./components/UpdateIngredient";
 import { getIngredients } from "./Networking";
 import "./App.css";
 

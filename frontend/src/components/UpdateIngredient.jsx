@@ -1,5 +1,9 @@
 import React, { useState } from "react";
 
 export default function UpdateIngredient(props) {
-  return;
+  return (
+    <div>
+      <button>UpdateIngredient</button>
+    </div>
+  );
 }
