@@ -32,3 +32,5 @@ function formatData(array) {
     return { id: ingredient[0], ingredient: ingredient[1], comedogenicity: ingredient[2], irritancy: ingredient[3] };
   });
 }
+
+// denon run --allow-read --allow-write --allow-net server.js
