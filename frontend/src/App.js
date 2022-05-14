@@ -1,23 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import SearchIngredient from "./components/SearchIngredient";
+import { getIngredients } from "./Networking";
+import "./App.css";
 
 function App() {
+  const [ingredients, setIngredients] = useState([]);
+
+  async function updateIngredients(names) {
+    let ingredientsData = [];
+    for (const n of names) {
+      const ingredient = await getIngredients(n);
+      ingredientsData.push(ingredient);
+    }
+    ingredientsData = ingredientsData.flat();
+    ingredientsData.length > 0 ? setIngredients(ingredientsData) : setIngredients(false);
+  }
+
+  function displayResults() {
+    if (ingredients.length > 0) {
+      return ingredients.map((ingredient, i) => {
+        return (
+          <div key={i}>
+            {ingredient.ingredient}(id:{ingredient.id}): comedogenicity:{ingredient.comedogenicity}, irritancy:{ingredient.irritancy}
+          </div>
+        );
+      });
+    } else if (!ingredients) return <div>Ingredient not found</div>;
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Check My Ingredient</h1>
+      <SearchIngredient updateIngredients={updateIngredients} />
+      {displayResults()}
     </div>
   );
 }
