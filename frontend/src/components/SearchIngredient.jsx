@@ -11,10 +11,11 @@ export default function SearchIngredient(props) {
   }
   function handleSearch() {
     props.updateIngredients(ingredients);
+    setIngredients([]);
   }
   return (
     <div className="search-ingredient-wrapper">
-      <textarea onChange={handleIngredients} name="ingredient-input" cols="20" rows="10"></textarea>
+      <textarea onChange={handleIngredients} value={ingredients} name="ingredient-input" cols="20" rows="10"></textarea>
       <button onClick={handleSearch}>Search</button>
       <button>Upload Picture</button>
     </div>

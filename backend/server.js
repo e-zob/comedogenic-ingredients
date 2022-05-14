@@ -17,7 +17,7 @@ app
   .get("/ingredients/:name", getIngredient)
   .post("/ingredients", addIngredient)
   .delete("/ingredients/:id", deleteIngredient)
-  .patch("/ingredients/:id", updateIngredient);
+  .patch("/ingredients", updateIngredient);
 
 app.start({ port: PORT });
 console.log(`Server running on http://localhost:${PORT}`);
@@ -49,8 +49,7 @@ async function deleteIngredient(server) {
 }
 
 async function updateIngredient(server) {
-  const { id } = server.params;
-  const { column, value } = await server.body;
+  const { id, column, value } = await server.body;
   const query = `UPDATE ingredients SET ${column}=? WHERE id=?`;
   if (["ingredient", "comedogenicity", "irritancy"].includes(column)) {
     db.query(query, [value, id]);
