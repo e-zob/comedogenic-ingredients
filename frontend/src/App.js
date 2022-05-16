@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import SearchIngredient from "./components/SearchIngredient";
 import UpdateIngredient from "./components/UpdateIngredient";
 import DeleteIngredient from "./components/DeleteIngredient";
+import AddIngredient from "./components/AddIngredient";
 import { getIngredients } from "./Networking";
 import "./App.css";
 
@@ -34,7 +35,11 @@ function App() {
     <div className="App">
       <h1>Check My Ingredient</h1>
       <SearchIngredient updateIngredients={updateIngredients} />
+      Add an ingredient
+      <AddIngredient />
+      Edit an ingredient
       <UpdateIngredient />
+      Delete an ingredient
       <DeleteIngredient />
       {displayResults()}
     </div>

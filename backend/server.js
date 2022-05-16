@@ -15,9 +15,9 @@ app
     })
   )
   .get("/ingredients/:name", getIngredient)
-  .post("/ingredients", addIngredient)
-  .delete("/ingredients/:id", deleteIngredient)
-  .patch("/ingredients", updateIngredient);
+  .post("/ingredients/add", addIngredient)
+  .delete("/ingredients/delete/:id", deleteIngredient)
+  .patch("/ingredients/update", updateIngredient);
 
 app.start({ port: PORT });
 console.log(`Server running on http://localhost:${PORT}`);
@@ -25,8 +25,7 @@ console.log(`Server running on http://localhost:${PORT}`);
 async function getIngredient(server) {
   const { name } = server.params;
   const query = "SELECT * FROM ingredients WHERE ingredient LIKE ?";
-  const rawResult = db.query(query, [`%${name.replaceAll("%20", "")}%`]);
-  const result = formatData(rawResult);
+  const result = db.queryEntries(query, [`%${name.replaceAll("%20", " ")}%`]);
   return server.json(result, 200);
 }
 
@@ -56,12 +55,6 @@ async function updateIngredient(server) {
     return server.json({ response: "Success" }, 200);
   }
   return server.json({ response: "Column doesn't exist" }, 400);
-}
-
-function formatData(array) {
-  return array.map((ingredient) => {
-    return { id: ingredient[0], ingredient: ingredient[1], comedogenicity: ingredient[2], irritancy: ingredient[3] };
-  });
 }
 
 // denon run --allow-read --allow-write --allow-net server.js
